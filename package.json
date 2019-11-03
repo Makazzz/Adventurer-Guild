@@ -1,15 +1,23 @@
 {
-  "name": "discordjs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node index.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "discord.js": "^11.0.0"
-  }
+	"name": "adventurer-guild",
+	"version": "1.0.0",
+	"description": "A Konosuba PvP Game",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Makazzz/adventurer-guild.git"
+	},
+	"author": "stefanjack and forked by Makazzz",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Makazzz/adventurer-guild/issues"
+	},
+	"homepage": "https://github.com/Makazzz/adventurer-guild",
+	"dependencies": {
+		"discord.js": "^11.0.0"
+	}
 }
