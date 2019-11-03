@@ -42,7 +42,7 @@ Launch the bot by using "node index.js" in the console with [Node.js][D2] instal
 
 ## Credits
 
-*	adventurer-guild is a fork of [adventurer-guild by stefanjack](https://AppName.com/).
+*	adventurer-guild is a fork of [adventurer-guild by stefanjack](https://github.com/stefanjack/adventurer-guild).
 
 ## License
 
