@@ -1,0 +1,18 @@
+# Ignore Work folder
+Work
+
+# Ignore node_modules
+node_modules
+
+# Ignore data file
+adventurer.txt
+auth.json
+channel.txt
+quest.txt
+token.txt
+
+# Ignore more file
+now
+now.cmd
+now.json
+package-lock.json
