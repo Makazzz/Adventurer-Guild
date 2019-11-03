@@ -205,18 +205,18 @@ Adventurer.prototype.fight = function(name1, name2, enemy){
 		var result=this.combat(name1, name2, enemy);
 		battleLog+=result[0]+"\n";
 		hp2-=result[1];
-		
+
 		if(hp2<=0)break;
-		
+
 		result=enemy.combat(name2, name1, this);
 		battleLog+=result[0]+"\n";
 		hp1-=result[1];
 	}
 	if(hp1>0){
-		battleLog+=name2+" died...\n"+name1+" wins!\n";
+		battleLog+=name2+" lose...\n"+name1+" win!\n";
 		this.getExp(enemy.level);
 	} else {
-		battleLog+=name1+" died...\n"+name2+" wins!\n";
+		battleLog+=name1+" lose...\n"+name2+" win!\n";
 		enemy.getExp(this.level);
 	}
 	return battleLog;
