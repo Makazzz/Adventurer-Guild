@@ -2,7 +2,7 @@
 	<img src="./img/konosuba.png" alt="Konosuba logo" title="Konosuba logo" width="200" />
 </p>
 
-# adventurer-guild<a href="https://discord.js.org/"><img src="./img/discordjs.png" width="300" height="95" alt="discord.js" title="discord.js" align="right"></a>
+# adventurer-guild<a href="https://discord.js.org/"><img src="./img/discordjs.png" width="263" height="83" alt="discord.js" title="discord.js" align="right"></a>
 
 <p align="center">
 	<a href="https://github.com/Makazzz/adventurer-guild/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Makazzz/adventurer-guild?color=0cf&logo=**Choose**"></a>
