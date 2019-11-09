@@ -443,7 +443,7 @@ client.on("message", msg => {
 						//eris reward
 						var reward=Math.ceil(Math.random()*adventurer[msg.guild.id][msg.author.id].level);
 						adventurer[msg.guild.id][msg.author.id].eris+=reward;
-						msg.channel.send(msg.author+" thy shalt remember 'tis!\nYou stole "+reward+" eris from the guild!");
+						msg.channel.send(msg.author+" you shall remember this!\nYou stole "+reward+" eris from the guild!");
 					}
 					return;
 				}
