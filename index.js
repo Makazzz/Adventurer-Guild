@@ -396,7 +396,7 @@ client.on("message", msg => {
 					}
 					else msg.channel.send(adversaries[msg.guild.id][2]+" "+event[msg.guild.id][5]+" left...");
 				}
-				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
+				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*5+10)];
 				//check lv up
 				if(adventurer[msg.guild.id][msg.author.id].level>prelevel) msg.channel.send(msg.author+" leveled up!");
 				//save
@@ -407,17 +407,17 @@ client.on("message", msg => {
 			if(content.startsWith("fight kazuma")) {
 				var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,"Kazuma",Adventurer.Kazuma);
 				msg.channel.send("```"+battleLog+"```");
-				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
+				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*5+10)];
 			}
 			else if(content.startsWith("fight aqua")) {
 				var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,"Aqua",Adventurer.Aqua);
 				msg.channel.send("```"+battleLog+"```");
-				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
+				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*5+10)];
 			}
 			else if(content.startsWith("fight megumin")) {
 				var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,"Megumin",Adventurer.Megumin);
 				msg.channel.send("```"+battleLog+"```");
-				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
+				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*5+10)];
 			}
 			else {
 				//check no mention
@@ -438,7 +438,7 @@ client.on("message", msg => {
 					var shadow=adventurer[msg.guild.id][msg.author.id].getShadow(3);
 					var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,client.user.username,shadow);
 					msg.channel.send("```"+battleLog+"```");
-					fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
+					fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*5+10)];
 					if(!battleLog.endsWith(client.user.username+" wins!\n")){
 						//eris reward
 						var reward=Math.ceil(Math.random()*adventurer[msg.guild.id][msg.author.id].level);
@@ -453,7 +453,7 @@ client.on("message", msg => {
 					var prelevel2=adventurer[msg.guild.id][enemyID].level;
 					var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,enemyUser.username,adventurer[msg.guild.id][enemyID]);
 					msg.channel.send("```"+battleLog+"```");
-					fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
+					fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*5+10)];
 					if(adventurer[msg.guild.id][enemyID].level>prelevel2) msg.channel.send(enemyUser+" leveled up!");
 					//check quests if win
 					if(battleLog.endsWith(msg.author.username+" wins!\n")){
