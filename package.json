@@ -1,23 +1,33 @@
 {
-	"name": "adventurer-guild",
-	"version": "1.0.0",
-	"description": "A Konosuba PvP Game",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node index.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Makazzz/adventurer-guild.git"
-	},
-	"author": "stefanjack and forked by Makazzz",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Makazzz/adventurer-guild/issues"
-	},
-	"homepage": "https://github.com/Makazzz/adventurer-guild",
-	"dependencies": {
-		"discord.js": "^11.0.0"
-	}
+  "name": "adventurer-guild",
+  "version": "1.0.1",
+  "description": "A Konosuba PvP bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Makazzz/adventurer-guild.git"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "adventurer",
+    "guild",
+    "konosuba",
+    "pvp",
+    "bot"
+  ],
+  "author": "stefanjack and forked by Makazzz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Makazzz/adventurer-guild/issues"
+  },
+  "homepage": "https://github.com/Makazzz/adventurer-guild#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "express": "^4.17.1"
+  }
 }
