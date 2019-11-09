@@ -1057,7 +1057,7 @@ function closeEvent(guild,win){
 	setTimeout(function(){openEvent(guild);},eventTime);
 }
 
-var game="with adult's toy";
+var game="with pantsu";
 
 client.on('ready', () => {
 	console.log('TO BATTLE!');
