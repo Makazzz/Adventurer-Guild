@@ -21,6 +21,7 @@ IF EXIST "%ProgramW6432%\nodejs\node.exe" (
 )
 
 :NODE
+cls
 color 0B
 node index.js
 pause
