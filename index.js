@@ -223,41 +223,41 @@ client.on("message", msg => {
 	//bully people
 	if(bully!=0){
 		if(msg.author.id==bully){
-			msg.channel.sendMessage(word);
+			msg.channel.send(word);
 		}
 	}
 	//admin target bully
 	if(msg.author.id==owner && content.startsWith(".bully <@")){
 		bully=msg.mentions.users.firstKey();
-		msg.channel.sendMessage("O7");
+		msg.channel.send("O7");
 		return;
 	}
 	else if(msg.author.id==owner && content.startsWith(".bully ")){
 		bully=content.substr(7);
-		msg.channel.sendMessage("O7");
+		msg.channel.send("O7");
 		return;
 	}
 	//stop bully
 	if(msg.author.id==owner && content.startsWith(".stop")){
 		bully=0;
-		msg.channel.sendMessage("O7");
+		msg.channel.send("O7");
 		return;
 	}
 	//set bully word
 	if(msg.author.id==owner && content.startsWith(".word ")){
 		word=msg.content.substr(6);
-		msg.channel.sendMessage("O7");
+		msg.channel.send("O7");
 		return;
 	}
 	//repeat message
 	if(msg.author.id==owner && content.startsWith(".say ")){
-		msg.channel.sendMessage(msg.content.substr(5));
+		msg.channel.send(msg.content.substr(5));
 		return;
 	}
 	//set nickname
 	if(msg.author.id==owner && content.startsWith(".nick ")){
 		msg.guild.members.get(client.user.id).setNickname(msg.content.substr(6));
-		msg.channel.sendMessage("O7");
+		msg.channel.send("O7");
 		return;
 	}
 	
@@ -279,7 +279,7 @@ client.on("message", msg => {
 				var eventTime=Math.ceil(Math.random()*35400000)+600000; //10 mins~10 hrs
 				setTimeout(function(){openEvent(msg.guild.id);},eventTime);
 			}
-			msg.channel.sendMessage("Roger");
+			msg.channel.send("Roger");
 			saveChannel();
 			return;
 		}
@@ -290,13 +290,13 @@ client.on("message", msg => {
 				game=msg.content.substr(("<@"+client.user.id+"> play ").length);
 				if(game.length>0){
 					console.log("playing "+game);
-					client.user.setGame(game);
+					client.user.setActivity(game);
 					return;
 				}
 			}
 		}
 		//help
-		msg.channel.sendMessage("```Commands:\n\n"+
+		msg.channel.send("```Commands:\n\n"+
 		"new adventurer   register as adventurer\n"+
 		"adventurer stat  check your stats\n"+
 		"fight            fight someone\n"+
@@ -317,33 +317,33 @@ client.on("message", msg => {
 		if(adventurer[msg.guild.id][msg.author.id]==undefined){
 			console.log("new adventurer");
 			adventurer[msg.guild.id][msg.author.id]=new Adventurer();
-			msg.channel.sendMessage(msg.author+" is now an adventurer!");
+			msg.channel.send(msg.author+" is now an adventurer!");
 			//save
 			saveData();
 		}
-		else msg.channel.sendMessage(msg.author+" is already an adventurer!");
+		else msg.channel.send(msg.author+" is already an adventurer!");
     }
 	
 	//adventurer stat
 	else if(content.startsWith("adventurer stat")) {
 		console.log("adventurer stat");
 		//stats of preset character
-		if(content.startsWith("adventurer stat kazuma")) msg.channel.sendMessage(Adventurer.Kazuma.stats("Kazuma"));
-		else if(content.startsWith("adventurer stat aqua")) msg.channel.sendMessage(Adventurer.Aqua.stats("Aqua"));
-		else if(content.startsWith("adventurer stat megumin")) msg.channel.sendMessage(Adventurer.Megumin.stats("Megumin"));
+		if(content.startsWith("adventurer stat kazuma")) msg.channel.send(Adventurer.Kazuma.stats("Kazuma"));
+		else if(content.startsWith("adventurer stat aqua")) msg.channel.send(Adventurer.Aqua.stats("Aqua"));
+		else if(content.startsWith("adventurer stat megumin")) msg.channel.send(Adventurer.Megumin.stats("Megumin"));
 		//is mentioned
 		else if(msg.mentions.users.array().length>0) {
 			var mentionID=msg.mentions.users.firstKey();
 			var mentionUser=client.users.get(mentionID);
 			//check mentioned is not this bot
-			if(mentionID==client.user.id) msg.channel.sendMessage(msg.author+" if you fight me, you'll understand...");
+			if(mentionID==client.user.id) msg.channel.send(msg.author+" if you fight me, you'll understand...");
 			//check mentioned is not adventurer
-			else if(adventurer[msg.guild.id][mentionID]!=undefined) msg.channel.sendMessage(adventurer[msg.guild.id][mentionID].stats(mentionUser.username));
-			else msg.channel.sendMessage(mentionUser+" is not an adventurer!");
+			else if(adventurer[msg.guild.id][mentionID]!=undefined) msg.channel.send(adventurer[msg.guild.id][mentionID].stats(mentionUser.username));
+			else msg.channel.send(mentionUser+" is not an adventurer!");
 		}
 		//self (check is adventurer)
-		else if(adventurer[msg.guild.id][msg.author.id]!=undefined) msg.channel.sendMessage(adventurer[msg.guild.id][msg.author.id].stats(msg.author.username));
-		else msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+		else if(adventurer[msg.guild.id][msg.author.id]!=undefined) msg.channel.send(adventurer[msg.guild.id][msg.author.id].stats(msg.author.username));
+		else msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 	}
 	
 	//fight
@@ -354,7 +354,7 @@ client.on("message", msg => {
 			if(fightCooldown[msg.guild.id][msg.author.id]==undefined)fightCooldown[msg.guild.id][msg.author.id]=[0,0];
 			var timeLeft=(fightCooldown[msg.guild.id][msg.author.id][1]*1000)-(new Date().getTime()-fightCooldown[msg.guild.id][msg.author.id][0]);
 			if(timeLeft>0){
-				msg.channel.sendMessage(msg.author+" you are too tired, rest "+timeString(timeLeft)+" more!");
+				msg.channel.send(msg.author+" you are too tired, rest "+timeString(timeLeft)+" more!");
 				return;
 			}
 			console.log("fight");
@@ -366,11 +366,11 @@ client.on("message", msg => {
 				}
 				//check dead
 				if(participator[msg.guild.id][msg.author.id].hp<=0){
-					msg.channel.sendMessage(msg.author+" you are dead!");
+					msg.channel.send(msg.author+" you are dead!");
 					return;
 				}
 				var result=participator[msg.guild.id][msg.author.id].combat(msg.author.username,event[msg.guild.id][5],adventurer[msg.guild.id][msg.author.id],adversaries[msg.guild.id][0],adversaries[msg.guild.id][1]);
-				msg.channel.sendMessage("```"+result+"\n\n"+event[msg.guild.id][5]+" ("+adversaries[msg.guild.id][1].hpInfo(adversaries[msg.guild.id][0])+")```");
+				msg.channel.send("```"+result+"\n\n"+event[msg.guild.id][5]+" ("+adversaries[msg.guild.id][1].hpInfo(adversaries[msg.guild.id][0])+")```");
 				//if win
 				if(adversaries[msg.guild.id][1].hp<=0){
 					adversaries[msg.guild.id][2]--;
@@ -379,7 +379,7 @@ client.on("message", msg => {
 						adventurer[msg.guild.id][msg.author.id].eris+=10000;
 						adventurer[msg.guild.id][msg.author.id].getExp(100);
 						adversaries[msg.guild.id][1]=new LiveAdv(adversaries[msg.guild.id][0]);
-						msg.channel.sendMessage("*throws 10,000 eris at* "+msg.author);
+						msg.channel.send("*throws 10,000 eris at* "+msg.author);
 					}
 					//cicada
 					if(event[msg.guild.id][0]==3){
@@ -391,11 +391,11 @@ client.on("message", msg => {
 						clearTimeout(closingEvent[msg.guild.id]);
 						closeEvent(msg.guild.id,true);
 					}
-					else msg.channel.sendMessage(adversaries[msg.guild.id][2]+" "+event[msg.guild.id][5]+" left...");
+					else msg.channel.send(adversaries[msg.guild.id][2]+" "+event[msg.guild.id][5]+" left...");
 				}
 				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
 				//check lv up
-				if(adventurer[msg.guild.id][msg.author.id].level>prelevel) msg.channel.sendMessage(msg.author+" leveled up!");
+				if(adventurer[msg.guild.id][msg.author.id].level>prelevel) msg.channel.send(msg.author+" leveled up!");
 				//save
 				saveData();
 				return;
@@ -403,44 +403,44 @@ client.on("message", msg => {
 			//if preset enemy
 			if(content.startsWith("fight kazuma")) {
 				var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,"Kazuma",Adventurer.Kazuma);
-				msg.channel.sendMessage("```"+battleLog+"```");
+				msg.channel.send("```"+battleLog+"```");
 				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
 			}
 			else if(content.startsWith("fight aqua")) {
 				var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,"Aqua",Adventurer.Aqua);
-				msg.channel.sendMessage("```"+battleLog+"```");
+				msg.channel.send("```"+battleLog+"```");
 				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
 			}
 			else if(content.startsWith("fight megumin")) {
 				var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,"Megumin",Adventurer.Megumin);
-				msg.channel.sendMessage("```"+battleLog+"```");
+				msg.channel.send("```"+battleLog+"```");
 				fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
 			}
 			else {
 				//check no mention
 				if(msg.mentions.users.array().length==0){
 					//usage help
-					msg.channel.sendMessage("```Usage:\nfight <mention>\n\npreset enemy available: Kazuma, Aqua, Megumin\n\nExample:\nfight Kazuma\n\nInfo:\nfight someone```");
+					msg.channel.send("```Usage:\nfight <mention>\n\npreset enemy available: Kazuma, Aqua, Megumin\n\nExample:\nfight Kazuma\n\nInfo:\nfight someone```");
 					return;
 				}
 				var enemyID=msg.mentions.users.firstKey();
 				//check enemy is not self
 				if(msg.author.id==enemyID){
-					msg.channel.sendMessage(msg.author+" don't do this to yourself!");
+					msg.channel.send(msg.author+" don't do this to yourself!");
 					return;
 				}
 				//check enemy is this bot
 				if(enemyID==client.user.id){
-					msg.channel.sendMessage(msg.author+" thou hath challengeth me, now feel my wrath!");
+					msg.channel.send(msg.author+" thou hath challengeth me, now feel my wrath!");
 					var shadow=adventurer[msg.guild.id][msg.author.id].getShadow(3);
 					var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,client.user.username,shadow);
-					msg.channel.sendMessage("```"+battleLog+"```");
+					msg.channel.send("```"+battleLog+"```");
 					fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
 					if(!battleLog.endsWith(client.user.username+" wins!\n")){
 						//eris reward
 						var reward=Math.ceil(Math.random()*adventurer[msg.guild.id][msg.author.id].level);
 						adventurer[msg.guild.id][msg.author.id].eris+=reward;
-						msg.channel.sendMessage(msg.author+" thy shalt remember 'tis!\nYou stole "+reward+" eris from the guild!");
+						msg.channel.send(msg.author+" thy shalt remember 'tis!\nYou stole "+reward+" eris from the guild!");
 					}
 					return;
 				}
@@ -449,9 +449,9 @@ client.on("message", msg => {
 				if(adventurer[msg.guild.id][enemyID]!=undefined){
 					var prelevel2=adventurer[msg.guild.id][enemyID].level;
 					var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,enemyUser.username,adventurer[msg.guild.id][enemyID]);
-					msg.channel.sendMessage("```"+battleLog+"```");
+					msg.channel.send("```"+battleLog+"```");
 					fightCooldown[msg.guild.id][msg.author.id]=[new Date().getTime(),Math.ceil(Math.random()*50+10)];
-					if(adventurer[msg.guild.id][enemyID].level>prelevel2) msg.channel.sendMessage(enemyUser+" leveled up!");
+					if(adventurer[msg.guild.id][enemyID].level>prelevel2) msg.channel.send(enemyUser+" leveled up!");
 					//check quests if win
 					if(battleLog.endsWith(msg.author.username+" wins!\n")){
 						if(questAll[msg.guild.id]!=undefined){
@@ -464,7 +464,7 @@ client.on("message", msg => {
 									var reward=Math.ceil(Math.random()*adventurer[msg.guild.id][questAll[msg.guild.id][0]].level*questAll[msg.guild.id][1]*3);
 									adventurer[msg.guild.id][msg.author.id].eris+=reward;
 									questAll[msg.guild.id]=undefined;
-									msg.channel.sendMessage(msg.author+"You have completed the shared quest!\n*throws "+reward+" eris at you*");
+									msg.channel.send(msg.author+"You have completed the shared quest!\n*throws "+reward+" eris at you*");
 								}
 							}
 						}
@@ -477,7 +477,7 @@ client.on("message", msg => {
 									var reward=Math.ceil(Math.random()*adventurer[msg.guild.id][quest[msg.guild.id][msg.author.id][0]].level*quest[msg.guild.id][msg.author.id][1]);
 									adventurer[msg.guild.id][msg.author.id].eris+=reward;
 									quest[msg.guild.id][msg.author.id]=undefined;
-									msg.channel.sendMessage(msg.author+"You have completed the personal quest!\n*throws "+reward+" eris at you*");
+									msg.channel.send(msg.author+"You have completed the personal quest!\n*throws "+reward+" eris at you*");
 								}
 							}
 						}
@@ -485,13 +485,13 @@ client.on("message", msg => {
 						saveQuest();
 					}
 				}
-				else msg.channel.sendMessage(enemyUser+" is not an adventurer!");
+				else msg.channel.send(enemyUser+" is not an adventurer!");
 			}
-			if(adventurer[msg.guild.id][msg.author.id].level>prelevel) msg.channel.sendMessage(msg.author+" leveled up!");
+			if(adventurer[msg.guild.id][msg.author.id].level>prelevel) msg.channel.send(msg.author+" leveled up!");
 			//save
 			saveData();
 		}
-		else msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+		else msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 	}
 	
 	//reincarnate
@@ -500,11 +500,11 @@ client.on("message", msg => {
 		if(adventurer[msg.guild.id][msg.author.id]!=undefined){
 			console.log("reincarnate");
 			adventurer[msg.guild.id][msg.author.id].reincarnation();
-			msg.channel.sendMessage(msg.author+" have reincarnated");
+			msg.channel.send(msg.author+" have reincarnated");
 			//save
 			saveData();
 		}
-		else msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+		else msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 	}
 	
 	//leaderboard
@@ -526,8 +526,8 @@ client.on("message", msg => {
 			delete server[top];
 			top=undefined;
 		}
-		if(text=="")msg.channel.sendMessage("There is no adventurer :frowning:");
-		else msg.channel.sendMessage("```"+text+"```");
+		if(text=="")msg.channel.send("There is no adventurer :frowning:");
+		else msg.channel.send("```"+text+"```");
 	}
 	
 	//hall of fame
@@ -539,7 +539,7 @@ client.on("message", msg => {
 		var length=0;
 		for(x in server)length++;
 		if(length<=0){
-			msg.channel.sendMessage("There is no adventurer :frowning:");
+			msg.channel.send("There is no adventurer :frowning:");
 			return;
 		}
 		console.log("hall of fame");
@@ -588,14 +588,14 @@ client.on("message", msg => {
 			else if(server[x].pantsu>server[top].pantsu)top=x;
 		}
 		text+="Most Pantsu : "+client.users.get(top).username+" ("+server[top].pantsu+")\n";
-		msg.channel.sendMessage("```"+text+"```");
+		msg.channel.send("```"+text+"```");
 	}
 	
 	//issue (shared) quest
 	else if(content=="issue quest"){
 		//already issued
 		if(questAll[msg.guild.id]!=undefined){
-			msg.channel.sendMessage("Quest already issued! Check it by `quest list` command!");
+			msg.channel.send("Quest already issued! Check it by `quest list` command!");
 			return;
 		}
 		//copy adventurer ID
@@ -607,14 +607,14 @@ client.on("message", msg => {
 		}
 		//not enough adventurer
 		if(length<1){
-			msg.channel.sendMessage("Not enough adventurer! At least 1 is needed");
+			msg.channel.send("Not enough adventurer! At least 1 is needed");
 			return;
 		}
 		console.log("issue quest")
 		//target id, kill needed, flavor
 		questAll[msg.guild.id]=[arrayID[Math.floor(Math.random()*arrayID.length)],Math.ceil(Math.random()*3+1)*5,questFlavor[Math.floor(Math.random()*questFlavor.length)]];
 		questAllDone[msg.guild.id]={};
-		msg.channel.sendMessage("Quest issued!\nKill "+questAll[msg.guild.id][1]+" "+client.users.get(questAll[msg.guild.id][0]).username+"!\n"+questAll[msg.guild.id][2]);
+		msg.channel.send("Quest issued!\nKill "+questAll[msg.guild.id][1]+" "+client.users.get(questAll[msg.guild.id][0]).username+"!\n"+questAll[msg.guild.id][2]);
 		//save
 		saveQuest();
 	}
@@ -623,7 +623,7 @@ client.on("message", msg => {
 	else if(content=="quest start"){
 		//check is adventurer
 		if(adventurer[msg.guild.id][msg.author.id]==undefined){
-			msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+			msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 			return;
 		}
 		//copy adventurer ID
@@ -635,7 +635,7 @@ client.on("message", msg => {
 		}
 		//not enough adventurer
 		if(length<2){
-			msg.channel.sendMessage("Not enough adventurer! At least 2 is needed");
+			msg.channel.send("Not enough adventurer! At least 2 is needed");
 			return;
 		}
 		//check cooldown
@@ -643,7 +643,7 @@ client.on("message", msg => {
 			//cooldown = 1hr
 			var timePassed=new Date().getTime()-quest[msg.guild.id][msg.author.id][3];
 			if(timePassed<3600000){
-				msg.channel.sendMessage("It's too soon to give up! Try again "+timeString(3600000-timePassed)+" later.");
+				msg.channel.send("It's too soon to give up! Try again "+timeString(3600000-timePassed)+" later.");
 				return;
 			}
 		}
@@ -654,7 +654,7 @@ client.on("message", msg => {
 		//target id, kill needed, flavor
 		quest[msg.guild.id][msg.author.id]=[randomID,Math.ceil(Math.random()*3+1)*5,questFlavor[Math.floor(Math.random()*questFlavor.length)],new Date().getTime()];
 		questDone[msg.guild.id][msg.author.id]=0;
-		msg.channel.sendMessage("Quest started!\nKill "+quest[msg.guild.id][msg.author.id][1]+" "+client.users.get(quest[msg.guild.id][msg.author.id][0]).username+"!\n"+quest[msg.guild.id][msg.author.id][2]);
+		msg.channel.send("Quest started!\nKill "+quest[msg.guild.id][msg.author.id][1]+" "+client.users.get(quest[msg.guild.id][msg.author.id][0]).username+"!\n"+quest[msg.guild.id][msg.author.id][2]);
 		//save
 		saveQuest();
 	}
@@ -663,7 +663,7 @@ client.on("message", msg => {
 	else if(content=="quest list"){
 		//check is adventurer
 		if(adventurer[msg.guild.id][msg.author.id]==undefined){
-			msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+			msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 			return;
 		}
 		console.log("quest list");
@@ -678,14 +678,14 @@ client.on("message", msg => {
 		if(quest[msg.guild.id][msg.author.id]!=undefined)
 			text+="Kill "+quest[msg.guild.id][msg.author.id][1]+" "+client.users.get(quest[msg.guild.id][msg.author.id][0]).username+"!\n"+quest[msg.guild.id][msg.author.id][2]+"\nKilled: "+questDone[msg.guild.id][msg.author.id];
 		else text+="None";
-		msg.channel.sendMessage("```"+text+"```");
+		msg.channel.send("```"+text+"```");
 	}
 	
 	/*//transfer
 	else if(content.startsWith("transfer ")){
 		//check is adventurer
 		if(adventurer[msg.guild.id][msg.author.id]==undefined){
-			msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+			msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 			return;
 		}
 		if(content.startsWith("transfer eris")){
@@ -697,7 +697,7 @@ client.on("message", msg => {
 			var sum=content.substr(content.indexOf(">")+2).trim().split(" ")[0];
 			if(isNaN(parseInt(sum)) || !isFinite(sum) || sum.indexOf(".")>=0 || !passed){
 				//usage help
-				msg.channel.sendMessage("```Usage:\ntransfer eris <mention> <sum>\n\nInfo:\ntransfer eris to others```");
+				msg.channel.send("```Usage:\ntransfer eris <mention> <sum>\n\nInfo:\ntransfer eris to others```");
 				return;
 			}
 			sum=parseInt(sum);
@@ -705,23 +705,23 @@ client.on("message", msg => {
 			var targetUser=client.users.get(targetID);
 			//check enough balance
 			if(adventurer[msg.guild.id][msg.author.id].eris<sum){
-				msg.channel.sendMessage(msg.author+" short on money? Do some quest!");
+				msg.channel.send(msg.author+" short on money? Do some quest!");
 				return;
 			}
 			//check target is not self
 			if(msg.author.id==targetID){
-				msg.channel.sendMessage(msg.author+" *throws back your money*");
+				msg.channel.send(msg.author+" *throws back your money*");
 				return;
 			}
 			//check target is adventurer
 			if(adventurer[msg.guild.id][targetID]==undefined){
-				msg.channel.sendMessage(targetUser+" is not an adventurer!");
+				msg.channel.send(targetUser+" is not an adventurer!");
 				return;
 			}
 			console.log("transfer eris");
 			adventurer[msg.guild.id][msg.author.id].eris-=sum;
 			adventurer[msg.guild.id][targetID].eris+=sum;
-			msg.channel.sendMessage(msg.author+" has given "+targetUser+" "+sum+" eris. Be thankful!");
+			msg.channel.send(msg.author+" has given "+targetUser+" "+sum+" eris. Be thankful!");
 			//save
 			saveData();
 		}
@@ -734,7 +734,7 @@ client.on("message", msg => {
 			var sum=content.substr(content.indexOf(">")+2).trim().split(" ")[0];
 			if(isNaN(parseInt(sum)) || !isFinite(sum) || sum.indexOf(".")>=0 || !passed){
 				//usage help
-				msg.channel.sendMessage("```Usage:\ntransfer pantsu <mention> <sum>\n\nInfo:\ntransfer pantsu to others```");
+				msg.channel.send("```Usage:\ntransfer pantsu <mention> <sum>\n\nInfo:\ntransfer pantsu to others```");
 				return;
 			}
 			sum=parseInt(sum);
@@ -742,23 +742,23 @@ client.on("message", msg => {
 			var targetUser=client.users.get(targetID);
 			//check enough pantsu
 			if(adventurer[msg.guild.id][msg.author.id].pantsu<sum){
-				msg.channel.sendMessage(msg.author+" you don't have the *goods*, go steal some!");
+				msg.channel.send(msg.author+" you don't have the *goods*, go steal some!");
 				return;
 			}
 			//check target is not self
 			if(msg.author.id==targetID){
-				msg.channel.sendMessage(msg.author+" *throws back your pantsu*");
+				msg.channel.send(msg.author+" *throws back your pantsu*");
 				return;
 			}
 			//check target is adventurer
 			if(adventurer[msg.guild.id][targetID]==undefined){
-				msg.channel.sendMessage(targetUser+" is not an adventurer!");
+				msg.channel.send(targetUser+" is not an adventurer!");
 				return;
 			}
 			console.log("transfer pantsu");
 			adventurer[msg.guild.id][msg.author.id].pantsu-=sum;
 			adventurer[msg.guild.id][targetID].pantsu+=sum;
-			msg.channel.sendMessage(msg.author+" has *sneakily* given "+targetUser+" "+sum+" pantsu(s). Be grateful!");
+			msg.channel.send(msg.author+" has *sneakily* given "+targetUser+" "+sum+" pantsu(s). Be grateful!");
 			//save
 			saveData();
 		}
@@ -766,7 +766,7 @@ client.on("message", msg => {
 	
 	//shop list
 	else if(content=="shop list" && eventStatus[msg.guild.id]==1){
-		msg.channel.sendMessage("To buy use `shop <item number>` command\n"+
+		msg.channel.send("To buy use `shop <item number>` command\n"+
 		"```Welcome to Wiz Shop!\n\n"+
 		"1. Potion      (100 eris) Restores HP\n"+
 		"2. Wiz Special (9 pantsu) Permanently increase random stat (limited offer)\n"+
@@ -777,7 +777,7 @@ client.on("message", msg => {
 	else if(content.startsWith("shop ") && eventStatus[msg.guild.id]==1){
 		//check is adventurer
 		if(adventurer[msg.guild.id][msg.author.id]==undefined){
-			msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+			msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 			return;
 		}
 		var number=content.substr(5);
@@ -786,7 +786,7 @@ client.on("message", msg => {
 			//check eris
 			var price=100;
 			if(adventurer[msg.guild.id][msg.author.id].eris<price){
-				msg.channel.sendMessage(msg.author+" short on money? Go home!");
+				msg.channel.send(msg.author+" short on money? Go home!");
 				return;
 			}
 			if(participator[msg.guild.id][msg.author.id]==undefined){
@@ -794,7 +794,7 @@ client.on("message", msg => {
 			}
 			adventurer[msg.guild.id][msg.author.id].eris-=price;
 			participator[msg.guild.id][msg.author.id].potion++;
-			msg.channel.sendMessage(msg.author+" bought potion!");
+			msg.channel.send(msg.author+" bought potion!");
 			//save
 			saveData();
 		}
@@ -803,12 +803,12 @@ client.on("message", msg => {
 			//check pantsu
 			var price=9;
 			if(adventurer[msg.guild.id][msg.author.id].pantsu<price){
-				msg.channel.sendMessage(msg.author+" short on pantsu? ¯\\\_(ツ)\_/¯");
+				msg.channel.send(msg.author+" short on pantsu? ¯\\\_(ツ)\_/¯");
 				return;
 			}
 			adventurer[msg.guild.id][msg.author.id].pantsu-=price;
 			adventurer[msg.guild.id][msg.author.id].randomGain();
-			msg.channel.sendMessage(msg.author+" bought Wiz Special... He feels kinda stronger");
+			msg.channel.send(msg.author+" bought Wiz Special... He feels kinda stronger");
 			//save
 			saveData();
 		}
@@ -816,7 +816,7 @@ client.on("message", msg => {
 	
 	//command list
 	else if(content=="command list" && eventStatus[msg.guild.id]==2){
-		msg.channel.sendMessage("```Commands:\n\n"+
+		msg.channel.send("```Commands:\n\n"+
 		"fight event  fight the boss\n"+
 		"check party  see party's HP\n"+
 		"use potion   use your potion on someone\n"+
@@ -830,14 +830,14 @@ client.on("message", msg => {
 		for(x in participator[msg.guild.id]){
 			text+=client.users.get(x).username+"\n"+participator[msg.guild.id][x].stat(adventurer[msg.guild.id][x])+"\n\n";
 		}
-		msg.channel.sendMessage(text+"```");
+		msg.channel.send(text+"```");
 	}
 	
 	//potion
 	else if(content.startsWith("use potion") && eventStatus[msg.guild.id]==2){
 		//check is adventurer
 		if(adventurer[msg.guild.id][msg.author.id]==undefined){
-			msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+			msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 			return;
 		}
 		if(participator[msg.guild.id][msg.author.id]==undefined){
@@ -854,17 +854,17 @@ client.on("message", msg => {
 				}
 				var result=participator[msg.guild.id][msg.author.id].usePotion(adventurer[msg.guild.id][mentionID],participator[msg.guild.id][mentionID]);
 				if(result.indexOf("dead")<0 && result.indexOf("any"))
-					msg.channel.sendMessage(msg.author+result+mentionUser+"```"+mentionUser.username+"\n"+participator[msg.guild.id][mentionID].stat(adventurer[msg.guild.id][mentionID])+"```");
-				else msg.channel.sendMessage(msg.author+result);
+					msg.channel.send(msg.author+result+mentionUser+"```"+mentionUser.username+"\n"+participator[msg.guild.id][mentionID].stat(adventurer[msg.guild.id][mentionID])+"```");
+				else msg.channel.send(msg.author+result);
 			}
-			else msg.channel.sendMessage(mentionUser+" is not an adventurer!");
+			else msg.channel.send(mentionUser+" is not an adventurer!");
 		}
 		//self
 		else if(adventurer[msg.guild.id][msg.author.id]!=undefined){
 			var result=participator[msg.guild.id][msg.author.id].usePotion(adventurer[msg.guild.id][msg.author.id],participator[msg.guild.id][msg.author.id]);
 			if(result.indexOf("dead")<0 && result.indexOf("any"))
-				msg.channel.sendMessage(msg.author+result+"\n```"+msg.author.username+"\n"+participator[msg.guild.id][msg.author.id].stat(adventurer[msg.guild.id][msg.author.id])+"```");
-			else msg.channel.sendMessage(msg.author+result);
+				msg.channel.send(msg.author+result+"\n```"+msg.author.username+"\n"+participator[msg.guild.id][msg.author.id].stat(adventurer[msg.guild.id][msg.author.id])+"```");
+			else msg.channel.send(msg.author+result);
 		}
 	}
 	
@@ -872,7 +872,7 @@ client.on("message", msg => {
 	else if(content.startsWith("revive ") && eventStatus[msg.guild.id]==2){
 		//check is adventurer
 		if(adventurer[msg.guild.id][msg.author.id]==undefined){
-			msg.channel.sendMessage(msg.author+" is not an adventurer! Use `new adventurer` command!");
+			msg.channel.send(msg.author+" is not an adventurer! Use `new adventurer` command!");
 			return;
 		}
 		if(participator[msg.guild.id][msg.author.id]==undefined){
@@ -889,29 +889,29 @@ client.on("message", msg => {
 				}
 				//check target dead
 				if(participator[msg.guild.id][mentionID].hp>0){
-					msg.channel.sendMessage(mentionUser+" is not dead yet, baka!");
+					msg.channel.send(mentionUser+" is not dead yet, baka!");
 					return;
 				}
 				//check mentioned is yourself
 				if(mentionID==msg.author.id){
-					msg.channel.sendMessage(msg.author+" you are now a corpse. So stay still.");
+					msg.channel.send(msg.author+" you are now a corpse. So stay still.");
 					return;
 				}
 				//check money
 				var price=10000;
 				if(adventurer[msg.guild.id][msg.author.id].eris<price){
-					msg.channel.sendMessage(msg.author+" Aqua doesn't feel you have enough ~~money~~ faith");
+					msg.channel.send(msg.author+" Aqua doesn't feel you have enough ~~money~~ faith");
 					return;
 				}
 				adventurer[msg.guild.id][msg.author.id].eris-=price;
 				participator[msg.guild.id][mentionID].revive(adventurer[msg.guild.id][mentionID]);
-				msg.channel.sendMessage(msg.author+" called Aqua to revive "+mentionUser+"\nThank you for your patronage\n```"+mentionUser.username+"\n"+participator[msg.guild.id][mentionID].stat(adventurer[msg.guild.id][mentionID])+"```");
+				msg.channel.send(msg.author+" called Aqua to revive "+mentionUser+"\nThank you for your patronage\n```"+mentionUser.username+"\n"+participator[msg.guild.id][mentionID].stat(adventurer[msg.guild.id][mentionID])+"```");
 			}
-			else msg.channel.sendMessage(mentionUser+" is not an adventurer!");
+			else msg.channel.send(mentionUser+" is not an adventurer!");
 		}
 		//usage
 		else {
-			msg.channel.sendMessage("```Usage:\nrevive <mention>```");
+			msg.channel.send("```Usage:\nrevive <mention>```");
 		}
 	}
 	
@@ -991,7 +991,7 @@ function openEvent(guild){
 	participator[guild]={};
 	//random event
 	event[guild]=eventList[Math.floor(Math.random()*eventList.length)];
-	botChannel[guild].sendMessage("`Raid Event` @here\n"+event[guild][1]+"\nEquipment shop has opened! Use `shop list` command");
+	botChannel[guild].send("`Raid Event` @here\n"+event[guild][1]+"\nEquipment shop has opened! Use `shop list` command");
 	
 	var eventTime=1200000; //20 mins
 	setTimeout(function(){startEvent(guild);},eventTime);
@@ -1001,7 +1001,7 @@ function startEvent(guild){
 	if(!checkChannel(guild))return;
 	console.log("start event");
 	eventStatus[guild]=2;
-	botChannel[guild].sendMessage("`Raid Event` @here\n"+event[guild][2]+"\nEveryone have evacuated, so equipment shop has closed!\nUse `command list` command to see what you can do!");
+	botChannel[guild].send("`Raid Event` @here\n"+event[guild][2]+"\nEveryone have evacuated, so equipment shop has closed!\nUse `command list` command to see what you can do!");
 	//adversaries
 	if(event[guild][0]==1){
 		var enemy=getDragon(adventurer[guild]);
@@ -1010,12 +1010,12 @@ function startEvent(guild){
 	else if(event[guild][0]==2){
 		var enemy=getCabbage();
 		adversaries[guild]=[enemy,new LiveAdv(enemy),Math.ceil(Math.random()*15)+15];
-		botChannel[guild].sendMessage(adversaries[guild][2]+" cabbages sighted!");
+		botChannel[guild].send(adversaries[guild][2]+" cabbages sighted!");
 	}
 	else if(event[guild][0]==3){
 		var enemy=getCicada();
 		adversaries[guild]=[enemy,new LiveAdv(enemy),Math.ceil(Math.random()*15)+15];
-		botChannel[guild].sendMessage(adversaries[guild][2]+" cicadas sighted!");
+		botChannel[guild].send(adversaries[guild][2]+" cicadas sighted!");
 	}
 	
 	var eventTime=3600000; //duration 1 hrs
@@ -1043,11 +1043,11 @@ function closeEvent(guild,win){
 		for(x in participator[guild]){
 			if(participator[guild][x].hp>0 && participator[guild][x].participate)adventurer[guild][x].eris+=reward;
 		}
-		botChannel[guild].sendMessage("`Raid Event` @here\n"+event[guild][3]+"\n\n"+reward+" eris for everyone participated! (if you are alive)");
+		botChannel[guild].send("`Raid Event` @here\n"+event[guild][3]+"\n\n"+reward+" eris for everyone participated! (if you are alive)");
 		//save
 		saveData();
 	}
-	else botChannel[guild].sendMessage("`Raid Event` @here\n"+event[guild][4]);
+	else botChannel[guild].send("`Raid Event` @here\n"+event[guild][4]);
 	
 	var eventTime=Math.ceil(Math.random()*35400000)+600000; //10 mins~10 hrs
 	console.log("event "+timeString(eventTime));
@@ -1058,7 +1058,7 @@ var game="with adult's toy";
 
 client.on('ready', () => {
 	console.log('TO BATTLE!');
-	client.user.setGame(game);
+	client.user.setActivity(game);
 	loadChannel();
 });
 
