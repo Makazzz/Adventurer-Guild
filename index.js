@@ -214,7 +214,10 @@ function timeString(millis){
 
 var bully=0;
 var word="fuck you";
-var owner="206099144346042369";
+//Old owner
+//var owner="206099144346042369";
+//Puni#2963 Created: 2016-07-22 17:24:25
+var owner="168187804277276672";
 
 client.on("message", msg => {
 	if(msg.author.id==client.user.id)return;
