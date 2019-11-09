@@ -434,7 +434,7 @@ client.on("message", msg => {
 				}
 				//check enemy is this bot
 				if(enemyID==client.user.id){
-					msg.channel.send(msg.author+" thou hath challengeth me, now feel my wrath!");
+					msg.channel.send(msg.author+" you tought you could challenge me? Now feel my wrath!");
 					var shadow=adventurer[msg.guild.id][msg.author.id].getShadow(3);
 					var battleLog=adventurer[msg.guild.id][msg.author.id].fight(msg.author.username,client.user.username,shadow);
 					msg.channel.send("```"+battleLog+"```");
