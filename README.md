@@ -3,7 +3,7 @@
 </p>
 
 # adventurer-guild<a href="https://discord.js.org/"><img src="./img/discordjs.png" width="188" height="59" alt="discord.js" title="discord.js" align="right"></a>
-
+<!-- TODO Add npm, node badges -->
 <p align="center">
 	<a href="https://github.com/Makazzz/adventurer-guild/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Makazzz/adventurer-guild?color=0cf&logo=**Choose**"></a>
 	<a href="https://github.com/Makazzz/adventurer-guild/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/github/downloads/Makazzz/adventurer-guild/latest/total?color=blue"></a>
