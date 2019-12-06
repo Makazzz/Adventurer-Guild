@@ -47,4 +47,4 @@ Launch the bot by using "node index.js" in the console with [Node.js][D2] instal
 ## License
 
 *	adventurer-guild released with the [MIT license](https://raw.githubusercontent.com/Makazzz/adventurer-guild/master/LICENSE).
-*	adventurer-guild by stefanjack is unlicense.
+*	adventurer-guild by stefanjack released with the [MIT license](https://raw.githubusercontent.com/stefanjack/adventurer-guild/master/LICENSE).
